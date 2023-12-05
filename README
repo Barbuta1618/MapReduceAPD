@@ -1,0 +1,57 @@
+CLASA MAPREDUCE
+(am incercat sa fac bonusul, nu stiu sigur daca este ok)
+
+- Tema are la baza o clasa MapReduce 
+  care se ocupa cu generalizarea acestei paradigme
+  folosindu-se de 2 cozi de task-uri(task-uri de tip map si task-uri de tip reduce)
+
+- clasa MapReduce se foloseste de o bariera 
+  pentru "a anunta" terminarea task-urilor de tip map
+  ca task-urile de tip reduce sa fie lansate
+
+- functiile runMap si runReduce extrag task-urile din cozi
+  si le executa in paralel prin intermediul unor functii
+  ajutatoare(helper_run_mapper, helper_run_ruducer)
+
+- interactiunea cu cozile de task-uri este protejata 
+  cu ajutorul a doua mutex-uri, cate unul pentru fiecare coada
+
+- metoda start lanseaza toate thread-urile(si cele pentru map si cele pentru reduce)
+  si asteapta ca acestea sa-si termine executia
+
+CLASA TASK
+
+- clasa task nu este decat o clasa abstracta
+  care supraincarca operatorul de apel ()
+  astfel incat pentru utilizarea clasei MapReduce
+  trebuie definite task-uri concrete sau, altfel spus,
+  trebuie definite clase care sa mosteneasca clasa Task
+
+- in cadrul acestei teme a fost nevoie de 2 tipuri de task-uri
+  cele care se ocupa de mapping si cele care fac reduce
+
+CLASA MAPTASK
+
+- un mapTask are de extras si de filtrat datele dintr-un singur fisier(asta nu inseamna ca
+  se pornesc atatea thread-uri cate mapTask-uri sunt, eficientizarea paralelismului
+  la nivel de impartire a fisierelor se realizeaza prin intermediul cozii de task-uri
+  din cadrul clasei MapReduce)
+
+- se foloseste o cautare binara pentru a verifica daca un numar este putere perfecta
+
+CLASA REDUCETASK
+
+- un reduceTask se foloseste de adresa rezultatelor(care este stocata si n clasa MapTask)
+  si se foloseste de proprietatile structurii de date "set" pentru a 
+  asigura unicitatea valorilor
+
+FUNCTIA MAIN
+
+- se construiesc task-urile de tip MapTask si cele de ReduceTask
+  si se insereaza in cele doua cozi
+- se creeaza o instanta de tip MapReduce cu ajutorul celor 2 cozi
+- se lanseaza metoda start a obiectului anterior amintit
+- se extrag si se afiseaza datele din fiecare ReduceTask 
+ 
+
+
